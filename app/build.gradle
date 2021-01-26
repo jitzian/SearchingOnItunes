@@ -60,7 +60,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${deps.retrofitVersionLib}"
     implementation "com.squareup.retrofit2:converter-gson:${deps.gsonVersionLib}"
 
-//    implementation project(":app:NetworkUtil")
+    implementation project(":app:NetworkUtil")
 }
 
 // LiveData & ViewModel
