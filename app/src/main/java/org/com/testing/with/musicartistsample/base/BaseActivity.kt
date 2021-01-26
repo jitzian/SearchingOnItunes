@@ -1,7 +1,6 @@
 package org.com.testing.with.musicartistsample.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import org.com.testing.with.networkutil.NetworkMonitorUtil
 import kotlin.properties.Delegates
@@ -30,6 +29,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    abstract fun initView()
     abstract fun setupObservers()
 
 }
