@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 abstract class BaseViewModel : ViewModel() {
     protected lateinit var TAG: String
-    protected val injector = DaggerNetworkComponentInjector.builder()
+    private val injector = DaggerNetworkComponentInjector.builder()
         .networkModule(NetworkModule(GlobalConstants.baseUrl))
         .build()
 
