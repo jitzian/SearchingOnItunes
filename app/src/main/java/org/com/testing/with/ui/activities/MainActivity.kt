@@ -1,13 +1,17 @@
-package org.com.testing.with.musicartistsample
+package org.com.testing.with.ui.activities
 
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import org.com.testing.with.musicartistsample.base.BaseActivity
+import org.com.testing.with.musicartistsample.base.factories.ViewModelFactory
 import org.com.testing.with.musicartistsample.databinding.ActivityMainBinding
 import org.com.testing.with.networkutil.ConnectionType
+import org.com.testing.with.ui.viewmodels.MainViewModel
 
 class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var mainVM: MainViewModel
 
     init {
         TAG = MainActivity::class.java.simpleName
@@ -16,6 +20,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState).also {
             initView()
+            initViewModel()
         }
     }
 
@@ -25,9 +30,13 @@ class MainActivity : BaseActivity() {
         initNetworkListener()
     }
 
+    private fun initViewModel() {
+        mainVM = ViewModelProvider(this, ViewModelFactory()).get(MainViewModel::class.java)
+    }
 
     override fun setupObservers() {
         //TODO("Not yet implemented")
+        mainVM.fetchRemoteData()
     }
 
     private fun initNetworkListener() {
