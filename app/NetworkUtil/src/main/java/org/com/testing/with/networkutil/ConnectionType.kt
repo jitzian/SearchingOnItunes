@@ -1,4 +1,7 @@
 package org.com.testing.with.networkutil
 
-class ConnectionType {
+//Enum for recognizing whether or not connectivity is available
+enum class ConnectionType {
+    Wifi,
+    Cellular
 }
