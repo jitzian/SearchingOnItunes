@@ -1,0 +1,3 @@
+include ':app:NetworkUtil'
+include ':app'
+rootProject.name = "MusicArtistSample"
