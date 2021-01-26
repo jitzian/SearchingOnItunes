@@ -7,14 +7,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
-class NetworkModule() {
+class NetworkModule(private val baseUrl: String) {
 
     @Provides
     @Reusable
     fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("")
+            .baseUrl(baseUrl)
             .build()
     }
 
