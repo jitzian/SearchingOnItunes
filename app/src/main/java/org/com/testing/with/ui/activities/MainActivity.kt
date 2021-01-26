@@ -17,7 +17,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState).also {
             initView()
         }
-//        setContentView(R.layout.activity_main)
     }
 
     override fun initView() {
