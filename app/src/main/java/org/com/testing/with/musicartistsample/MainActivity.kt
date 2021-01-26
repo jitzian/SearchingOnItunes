@@ -3,21 +3,32 @@ package org.com.testing.with.musicartistsample
 import android.os.Bundle
 import android.util.Log
 import org.com.testing.with.musicartistsample.base.BaseActivity
+import org.com.testing.with.musicartistsample.databinding.ActivityMainBinding
 import org.com.testing.with.networkutil.ConnectionType
 
 class MainActivity : BaseActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     init {
         TAG = MainActivity::class.java.simpleName
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        super.onCreate(savedInstanceState).also {
+            initView()
+        }
+//        setContentView(R.layout.activity_main)
     }
 
+    override fun initView() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initNetworkListener()
+    }
+
+
     override fun setupObservers() {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 
     private fun initNetworkListener() {
