@@ -29,56 +29,6 @@ class MainViewModel : BaseViewModel() {
     val artistResult: LiveData<List<ArtistAlbum>>
         get() = _artistResult
 
-    fun _fetchData(artistName: String?) = viewModelScope.launch {
-//        artistName?.let { safeArtistName ->
-//            viewModelScope.launch {
-//                val queryResult = withContext(Dispatchers.IO) {
-//                    repository.getByArtistName(safeArtistName)
-//                }
-//                if (queryResult.asLiveData().value != null) {
-//                    _artistResult.postValue(queryResult.asLiveData().value)
-//                } else {
-//
-//                }
-//            }
-//
-//
-//        }
-
-        if (artistName != null) {
-            val localResult = repository.getByArtistName(artistName).asLiveData()
-            if (localResult.value != null) {
-                _artistResult.postValue(localResult.value)
-            } else {
-                val queryMap = mutableMapOf(
-                    "term" to artistName
-                )
-                val resultOfFetchedData = withContext(Dispatchers.IO) {
-                    restApi.fetchRemoteData(queryMap)
-                }
-
-                resultOfFetchedData.results?.let { safeListOfResults ->
-                    safeListOfResults.forEach {
-                        val tempArtistAlbum = ArtistAlbum(
-                            artistId = it.artistId,
-                            artistName = it.artistName,
-                            trackName = it.trackName,
-                            releaseDate = it.releaseDate,
-                            primaryGenreName = it.primaryGenreName,
-                            trackPrice = it.trackPrice
-                        )
-                        repository.insert(tempArtistAlbum)
-                    }
-                    withContext(Dispatchers.IO) {
-                        _artistResult.postValue(
-                            repository.getByArtistName(artistName).asLiveData().value
-                        )
-                    }
-                }
-            }
-        }
-    }
-
     fun fetchData(artistName: String?) {
         if (artistName != null) {
             viewModelScope.launch {
@@ -101,7 +51,8 @@ class MainViewModel : BaseViewModel() {
                                         trackName = it.trackName,
                                         releaseDate = it.releaseDate,
                                         primaryGenreName = it.primaryGenreName,
-                                        trackPrice = it.trackPrice
+                                        trackPrice = it.trackPrice,
+                                        artworkUrl100 = it.artworkUrl100
                                     )
                                     repository.insert(tempArtistAlbum)
                                 }
@@ -116,19 +67,6 @@ class MainViewModel : BaseViewModel() {
                     }
                 }
             }
-        }
-    }
-
-    //TODO: Implement
-    fun fetchRemoteData() {
-        viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                val queryMap = mutableMapOf(
-                    "term" to "Linkin Park"
-                )
-                restApi.fetchRemoteData(queryMap)
-            }
-            Log.e(TAG, "fetchRemoteData::${result.resultCount}")
         }
     }
 
