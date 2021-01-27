@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "ArtistAlbum")
 data class ArtistAlbum(
     @ColumnInfo(name = "artistId") val artistId: Int?,
     @ColumnInfo(name = "artistName") val artistName: String? = "",
