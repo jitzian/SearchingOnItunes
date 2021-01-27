@@ -14,10 +14,10 @@ interface ArtistAlbumDao {
     suspend fun delete(data: ArtistAlbum)
 
     @Query("SELECT * FROM ArtistAlbum WHERE artistName=:artistName")
-    suspend fun getByArtistName(artistName: String): Flow<List<ArtistAlbum>>
+    fun getByArtistName(artistName: String): Flow<List<ArtistAlbum>>
 
     @Query("SELECT * FROM ArtistAlbum WHERE id=:id")
-    suspend fun getByArtistId(id: Int): Flow<List<ArtistAlbum>>
+    fun getByArtistId(id: Int): Flow<List<ArtistAlbum>>
 
     @Update
     suspend fun update(data: ArtistAlbum)
