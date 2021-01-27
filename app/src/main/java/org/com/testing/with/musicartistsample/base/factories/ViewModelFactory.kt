@@ -2,7 +2,7 @@ package org.com.testing.with.musicartistsample.base.factories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.com.testing.with.ui.viewmodels.MainViewModel
+import org.com.testing.with.showArtist.ui.viewmodels.MainViewModel
 import java.lang.IllegalStateException
 
 @Suppress("UNCHECKED_CAST")
