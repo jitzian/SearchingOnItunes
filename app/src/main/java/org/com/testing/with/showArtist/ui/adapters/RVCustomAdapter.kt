@@ -50,10 +50,15 @@ class RVCustomAdapter : RecyclerView.Adapter<RVCustomAdapter.ViewHolder>() {
 
         fun bindData(data: ArtistAlbum) {
 
-            //TODO: Add fallback image when value does not exist
-            Picasso.get()
-                .load(data.artworkUrl100)
-                .into(mImageViewArtistDetailArtWork)
+            if (checkArtWork(data).isNotEmpty()) {
+                Picasso.get()
+                    .load(checkArtWork(data))
+                    .into(mImageViewArtistDetailArtWork)
+            } else {
+                Picasso.get()
+                    .load(R.drawable.not_available_image_resource)
+                    .into(mImageViewArtistDetailArtWork)
+            }
 
             mTextViewArtistDetailArtistName.text = data.artistName
             mTextViewArtistDetailTrackName.text = data.trackName
@@ -62,6 +67,20 @@ class RVCustomAdapter : RecyclerView.Adapter<RVCustomAdapter.ViewHolder>() {
             mTextViewArtistDetailTrackPrice.text = data.trackPrice.toString()
         }
 
+        private fun checkArtWork(data: ArtistAlbum): String {
+            var safeArtWork = ""
+
+            with(data) {
+                if (!artworkUrl100.isNullOrEmpty()) {
+                    safeArtWork = artworkUrl100
+                } else if (!artworkUrl60.isNullOrEmpty()) {
+                    safeArtWork = artworkUrl60
+                } else if (!artworkUrl30.isNullOrEmpty()) {
+                    safeArtWork = artworkUrl30
+                }
+            }
+            return safeArtWork
+        }
     }
 
     fun setData(lstRes: List<ArtistAlbum>?) {
