@@ -1,0 +1,33 @@
+<resources>
+
+    <style name="detailCardViewArtistNameTitle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginTop">@dimen/dp_4</item>
+    </style>
+
+    <style name="detailCardViewTrackName" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginTop">@dimen/dp_4</item>
+    </style>
+
+    <style name="detailCardViewReleaseDate" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_marginTop">@dimen/dp_4</item>
+    </style>
+
+    <style name="detailCardViewPrimaryGenreName" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginTop">@dimen/dp_4</item>
+    </style>
+
+    <style name="detailCardViewTrackPrice" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginTop">@dimen/dp_4</item>
+    </style>
+
+</resources>
