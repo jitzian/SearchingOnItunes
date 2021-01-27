@@ -13,7 +13,8 @@ interface ArtistAlbumDao {
     @Delete
     suspend fun delete(data: ArtistAlbum)
 
-    @Query("SELECT * FROM ArtistAlbum WHERE artistName=:artistName")
+//    @Query("SELECT * FROM ArtistAlbum WHERE artistName=:artistName")
+    @Query("SELECT * FROM ArtistAlbum WHERE artistName LIKE :artistName COLLATE NOCASE")
     fun getByArtistName(artistName: String): Flow<List<ArtistAlbum>>
 
     @Query("SELECT * FROM ArtistAlbum WHERE id=:id")
