@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Code Challenge</string>
+    <string name="network_status">NETWORK_MONITOR_STATUS</string>
+    <string name="string_wifi_connection">Wifi Connection</string>
+    <string name="string_cellular_connection">Cellular Connection</string>
+    <string name="string_there_is_no_connectivity">There is no connectivity</string>
+    <string name="string_no_connectivity">No connectivity</string>
 </resources>

@@ -2,12 +2,14 @@ package org.com.testing.with.showArtist.ui.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.com.testing.with.musicartistsample.R
 import org.com.testing.with.musicartistsample.base.BaseActivity
 import org.com.testing.with.musicartistsample.base.factories.ViewModelFactory
 import org.com.testing.with.musicartistsample.databinding.ActivityMainBinding
@@ -54,7 +56,6 @@ class MainActivity : BaseActivity() {
 
     override fun setupObservers() {
         mainVM.artistResult.observe(this, Observer { listOfArtistAlbums ->
-            Log.e(TAG, "setupObservers::${listOfArtistAlbums}")
             adapter = RVCustomAdapter()
             adapter.apply {
                 setData(listOfArtistAlbums)
@@ -92,22 +93,42 @@ class MainActivity : BaseActivity() {
                     true -> {
                         when (type) {
                             ConnectionType.Wifi -> {
-                                Log.i("$TAG::NETWORK_MONITOR_STATUS", "Wifi Connection")
+                                Log.i(
+                                    TAG,
+                                    "initNetworkListener::${getString(R.string.network_status)}::${
+                                        resources.getString(R.string.string_wifi_connection)
+                                    }"
+                                )
                                 isConnected = true
+                                binding.mSearchViewSearchByArtistName.visibility = View.VISIBLE
                                 setupObservers()
                             }
                             ConnectionType.Cellular -> {
-                                Log.i("$TAG::NETWORK_MONITOR_STATUS", "Cellular Connection")
+                                Log.i(
+                                    TAG,
+                                    "initNetworkListener::${getString(R.string.network_status)}::${
+                                        resources.getString(R.string.string_cellular_connection)
+                                    }"
+                                )
                                 isConnected = true
+                                binding.mSearchViewSearchByArtistName.visibility = View.VISIBLE
                             }
                             else -> {
                             }
                         }
                     }
                     false -> {
-                        Log.e("$TAG::NETWORK_MONITOR_STATUS", "No Connection")
+                        Log.e(
+                            "$TAG::${getString(R.string.network_status)}",
+                            getString(R.string.string_no_connectivity)
+                        )
                         isConnected = false
-                        Toast.makeText(this, "There is no connectivity", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            getString(R.string.string_there_is_no_connectivity),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        binding.mSearchViewSearchByArtistName.visibility = View.GONE
                     }
                 }
             }

@@ -1,16 +1,15 @@
 package org.com.testing.with.showArtist.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.com.testing.with.musicartistsample.CustomApp
 import org.com.testing.with.musicartistsample.base.BaseViewModel
 import org.com.testing.with.showArtist.model.db.model.ArtistAlbum
 import org.com.testing.with.showArtist.model.repository.ArtistAlbumRepository
-import retrofit2.HttpException
 
 class MainViewModel : BaseViewModel() {
 
@@ -27,13 +26,16 @@ class MainViewModel : BaseViewModel() {
     val artistResult: LiveData<List<ArtistAlbum>>
         get() = _artistResult
 
-    fun fetchData(artistName: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun fetchData(artistName: String) = viewModelScope.launch {
         val localData = repository.getAllByArtistName(artistName)
         if (localData.isNotEmpty()) {
             _artistResult.postValue(localData)
         } else {
-            try {
-                val remoteData = restApi.fetchRemoteData(mapOf("term" to artistName))
+            if (artistName.isNotBlank() || artistName.isNotEmpty()) {
+
+                val remoteData = withContext(Dispatchers.IO) {
+                    restApi.fetchRemoteData(mapOf("term" to artistName))
+                }
 
                 if (remoteData.results?.isNotEmpty() == true) {
                     remoteData.results.forEach {
@@ -53,9 +55,6 @@ class MainViewModel : BaseViewModel() {
                     }
                     _artistResult.postValue(repository.getAllByArtistName(artistName))
                 }
-
-            } catch (httpEx: HttpException) {
-                Log.e(TAG, "fetchData::${httpEx.message()}")
             }
         }
     }
