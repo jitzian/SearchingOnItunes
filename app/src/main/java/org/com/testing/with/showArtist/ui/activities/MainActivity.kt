@@ -2,6 +2,8 @@ package org.com.testing.with.showArtist.ui.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +36,13 @@ class MainActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart().also {
-            mainVM.fetchData("Linkin Park")
+//            mainVM.fetchData("Linkin Park")
+        }
+    }
+
+    override fun onResume() {
+        super.onResume().also {
+//            mainVM.fetchData(binding.mSearchViewSearchByArtistName.query.toString())
         }
     }
 
@@ -43,6 +51,7 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
         setupRV()
         initNetworkListener()
+        setupSearchView()
     }
 
     private fun initViewModel() {
@@ -50,11 +59,14 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setupObservers() {
-        //TODO("Not yet implemented")
         mainVM.artistResult.observe(this, Observer { listOfArtistAlbums ->
             Log.e(TAG, "setupObservers::${listOfArtistAlbums}")
             adapter = RVCustomAdapter()
-            adapter.setData(listOfArtistAlbums)
+            adapter.apply {
+                setData(listOfArtistAlbums)
+                binding.mRecyclerView.adapter = this
+            }
+//            adapter.setData(listOfArtistAlbums)
             binding.mRecyclerView.adapter = adapter
         })
     }
@@ -64,6 +76,21 @@ class MainActivity : BaseActivity() {
         binding.mRecyclerView.layoutManager = layoutManager
     }
 
+    private fun setupSearchView(){
+        binding.mSearchViewSearchByArtistName.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let{
+                    mainVM.fetchData(it)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+    }
+
     private fun initNetworkListener() {
         networkMonitor.result = { isAvailable, type ->
             runOnUiThread {
@@ -71,7 +98,7 @@ class MainActivity : BaseActivity() {
                     true -> {
                         when (type) {
                             ConnectionType.Wifi -> {
-                                Log.i("NETWORK_MONITOR_STATUS", "Wifi Connection")
+                                Log.i("$TAG::NETWORK_MONITOR_STATUS", "Wifi Connection")
                                 isConnected = true
 //                                showVM.fetchDataAndStoreIntoDb().also {
 //                                    setupObservers()
@@ -79,7 +106,7 @@ class MainActivity : BaseActivity() {
                                 setupObservers()
                             }
                             ConnectionType.Cellular -> {
-                                Log.i("NETWORK_MONITOR_STATUS", "Cellular Connection")
+                                Log.i("$TAG::NETWORK_MONITOR_STATUS", "Cellular Connection")
                                 isConnected = true
 //                                setupObservers()
                             }
@@ -88,8 +115,9 @@ class MainActivity : BaseActivity() {
                         }
                     }
                     false -> {
-                        Log.e("NETWORK_MONITOR_STATUS", "No Connection")
+                        Log.e("$TAG::NETWORK_MONITOR_STATUS", "No Connection")
                         isConnected = false
+                        Toast.makeText(this, "There is no connectivity", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
