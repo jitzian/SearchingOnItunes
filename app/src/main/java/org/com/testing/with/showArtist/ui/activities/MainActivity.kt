@@ -34,15 +34,9 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart().also {
-//            mainVM.fetchData("Linkin Park")
-        }
-    }
-
     override fun onResume() {
         super.onResume().also {
-//            mainVM.fetchData(binding.mSearchViewSearchByArtistName.query.toString())
+            mainVM.fetchData(binding.mSearchViewSearchByArtistName.query.toString())
         }
     }
 
@@ -66,7 +60,6 @@ class MainActivity : BaseActivity() {
                 setData(listOfArtistAlbums)
                 binding.mRecyclerView.adapter = this
             }
-//            adapter.setData(listOfArtistAlbums)
             binding.mRecyclerView.adapter = adapter
         })
     }
@@ -76,10 +69,11 @@ class MainActivity : BaseActivity() {
         binding.mRecyclerView.layoutManager = layoutManager
     }
 
-    private fun setupSearchView(){
-        binding.mSearchViewSearchByArtistName.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+    private fun setupSearchView() {
+        binding.mSearchViewSearchByArtistName.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let{
+                query?.let {
                     mainVM.fetchData(it)
                 }
                 return false
@@ -100,15 +94,11 @@ class MainActivity : BaseActivity() {
                             ConnectionType.Wifi -> {
                                 Log.i("$TAG::NETWORK_MONITOR_STATUS", "Wifi Connection")
                                 isConnected = true
-//                                showVM.fetchDataAndStoreIntoDb().also {
-//                                    setupObservers()
-//                                }
                                 setupObservers()
                             }
                             ConnectionType.Cellular -> {
                                 Log.i("$TAG::NETWORK_MONITOR_STATUS", "Cellular Connection")
                                 isConnected = true
-//                                setupObservers()
                             }
                             else -> {
                             }
