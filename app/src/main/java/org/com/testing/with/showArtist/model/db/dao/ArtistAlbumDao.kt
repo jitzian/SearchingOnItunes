@@ -17,8 +17,8 @@ interface ArtistAlbumDao {
     @Query("SELECT * FROM ArtistAlbum WHERE artistName LIKE :artistName")
     fun getByArtistName(artistName: String): Flow<List<ArtistAlbum>?>
 
-    @Query("SELECT * FROM ArtistAlbum WHERE artistName LIKE :artistName")
-    suspend fun getAllByArtistName(artistName: String): List<ArtistAlbum>
+    @Query("SELECT * FROM ArtistAlbum WHERE artistNameAsInput LIKE :artistNameAsInput")
+    suspend fun getAllByArtistName(artistNameAsInput: String): List<ArtistAlbum>
 
     @RawQuery
     fun _getByArtistName(query: SupportSQLiteQuery): List<ArtistAlbum>?

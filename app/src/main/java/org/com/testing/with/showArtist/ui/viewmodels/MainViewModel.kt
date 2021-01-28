@@ -39,8 +39,8 @@ class MainViewModel : BaseViewModel() {
                     remoteData.results.forEach {
                         val tempArtistAlbum = ArtistAlbum(
                             artistId = it.artistId,
-//                            artistName = it.artistName,
-                            artistName = artistName,
+                            artistName = it.artistName,
+                            artistNameAsInput = artistName,
                             trackName = it.trackName,
                             releaseDate = it.releaseDate,
                             primaryGenreName = it.primaryGenreName,

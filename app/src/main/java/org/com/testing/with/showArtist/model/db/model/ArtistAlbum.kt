@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "ArtistAlbum")
 data class ArtistAlbum(
     @ColumnInfo(name = "artistId") val artistId: Int?,
+    @ColumnInfo(name = "artistNameAsInput") val artistNameAsInput: String? = "",
     @ColumnInfo(name = "artistName") val artistName: String? = "",
     @ColumnInfo(name = "artistViewUrl") val artistViewUrl: String? = "",
     @ColumnInfo(name = "artworkUrl100") val artworkUrl100: String? = "",

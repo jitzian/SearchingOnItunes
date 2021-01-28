@@ -31,8 +31,8 @@ class ArtistAlbumRepository(private val dao: ArtistAlbumDao) {
     }
 
     @WorkerThread
-    suspend fun getAllByArtistName(artistName: String): List<ArtistAlbum> =
-        dao.getAllByArtistName(artistName)
+    suspend fun getAllByArtistName(artistNameAsInput: String): List<ArtistAlbum> =
+        dao.getAllByArtistName(artistNameAsInput)
 
     @WorkerThread
     fun getByArtistId(id: Int): Flow<List<ArtistAlbum>> = dao.getByArtistId(id)
