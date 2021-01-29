@@ -1,25 +1,25 @@
 package org.com.testing.with.showArtist.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.com.testing.with.musicartistsample.R
+import org.com.testing.with.musicartistsample.databinding.ArtistDetailCardViewBinding
 import org.com.testing.with.showArtist.model.db.model.ArtistAlbum
 
-//TODO: UPdate this with viewbinding
 class RVCustomAdapter : RecyclerView.Adapter<RVCustomAdapter.ViewHolder>() {
 
     private var lstRes: List<ArtistAlbum>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.artist_detail_card_view, parent, false)
-        )
+        val binding =
+            ArtistDetailCardViewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -32,39 +32,26 @@ class RVCustomAdapter : RecyclerView.Adapter<RVCustomAdapter.ViewHolder>() {
         return lstRes?.size ?: 0
     }
 
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val mImageViewArtistDetailArtWork =
-            itemView.findViewById<ImageView>(R.id.mImageViewArtistDetailArtWork)
-        private val mTextViewArtistDetailArtistName =
-            itemView.findViewById<TextView>(R.id.mTextViewArtistDetailArtistName)
-        private val mTextViewArtistDetailTrackName =
-            itemView.findViewById<TextView>(R.id.mTextViewArtistDetailTrackName)
-        private val mTextViewArtistDetailReleaseDate =
-            itemView.findViewById<TextView>(R.id.mTextViewArtistDetailReleaseDate)
-        private val mTextViewArtistDetailPrimaryGenreName =
-            itemView.findViewById<TextView>(R.id.mTextViewArtistDetailPrimaryGenreName)
-        private val mTextViewArtistDetailTrackPrice =
-            itemView.findViewById<TextView>(R.id.mTextViewArtistDetailTrackPrice)
+    inner class ViewHolder(private val binding: ArtistDetailCardViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bindData(data: ArtistAlbum) {
 
             if (checkArtWork(data).isNotEmpty()) {
                 Picasso.get()
                     .load(checkArtWork(data))
-                    .into(mImageViewArtistDetailArtWork)
+                    .into(binding.mImageViewArtistDetailArtWork)
             } else {
                 Picasso.get()
                     .load(R.drawable.not_available_image_resource)
-                    .into(mImageViewArtistDetailArtWork)
+                    .into(binding.mImageViewArtistDetailArtWork)
             }
 
-            mTextViewArtistDetailArtistName.text = data.artistName
-            mTextViewArtistDetailTrackName.text = data.trackName
-            mTextViewArtistDetailReleaseDate.text = data.releaseDate
-            mTextViewArtistDetailPrimaryGenreName.text = data.primaryGenreName
-            mTextViewArtistDetailTrackPrice.text = data.trackPrice.toString()
+            binding.mTextViewArtistDetailArtistName.text = data.artistName
+            binding.mTextViewArtistDetailTrackName.text = data.trackName
+            binding.mTextViewArtistDetailReleaseDate.text = data.releaseDate
+            binding.mTextViewArtistDetailPrimaryGenreName.text = data.primaryGenreName
+            binding.mTextViewArtistDetailTrackPrice.text = data.trackPrice.toString()
         }
 
         private fun checkArtWork(data: ArtistAlbum): String {
